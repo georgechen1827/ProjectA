@@ -31,11 +31,11 @@ namespace ProjectA
 
             /** test */
 
-            //LucenceEngine.ReadDocs("../1.txt", "../idx");
+            LucenceEngine.ReadDocs("../1.txt", "../idx");   //第一次生成会失败，需要在bin文件夹下创建一个1.txt文件
 
             LucenceEngine L = new LucenceEngine("../idx");
 
-            string[] s = L.Search("madam hello");
+            string[] s = L.Search("madam is");
 
             B.Text = "";
 
