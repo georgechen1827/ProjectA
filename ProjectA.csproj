@@ -35,18 +35,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Abodit.Wordnet, Version=3.7.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\AboditNLPWordnet.3.7.325.1\lib\net45\Abodit.Wordnet.dll</HintPath>
-    </Reference>
-    <Reference Include="Abodit.Wordnet.Extended, Version=3.7.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\AboditNLPWordnetExtended.3.7.325.1\lib\net45\Abodit.Wordnet.Extended.dll</HintPath>
-    </Reference>
-    <Reference Include="AboditNLP, Version=3.7.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\AboditNLP.3.7.325.1\lib\net472\AboditNLP.dll</HintPath>
-    </Reference>
-    <Reference Include="AboditUnits, Version=3.7.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\AboditUnits.3.7.325.1\lib\net472\AboditUnits.dll</HintPath>
-    </Reference>
     <Reference Include="Dynamitey, Version=2.0.9.136, Culture=neutral, PublicKeyToken=cbf53ea3aeb972c6, processorArchitecture=MSIL">
       <HintPath>packages\Dynamitey.2.0.9.136\lib\net40\Dynamitey.dll</HintPath>
     </Reference>
@@ -99,6 +87,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PipeEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -124,6 +113,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="python\pipe.py">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\Docs.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
