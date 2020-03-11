@@ -23,13 +23,26 @@ class PipeEngine:
 
             win32file.WriteFile(self.PipeServer, bytes("pythonPipe", encoding='utf-8'))
 
-        except:
-            print("error")
+        except Exception as e:
+            print(e)
             print(PipeName)
 
+    def StartListening(self,func):
+        while True:
+            try:
+                result = win32file.ReadFile(self.PipeServer, self.IOBuffSize, None)[1].decode('utf-8')
+                win32file.WriteFile(self.PipeServer, bytes(func(result), encoding='utf-8'))
+            except Exception as e:
+                print(e)
+
+
+
+def func(string):
+    return string
 
 if __name__=="__main__":
     gpus = sys.argv[1]
     pipe = PipeEngine(gpus)
     print("running")
+    pipe.StartListening(func)
     x = input()

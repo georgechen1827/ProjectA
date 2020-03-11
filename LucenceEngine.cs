@@ -28,38 +28,53 @@ namespace ProjectA
         public LucenceEngine(string IndexDir)
         {
             // IndexWriter.MaxFieldLength maxFieldLength = new IndexWriter.MaxFieldLength(int <len>);
-
-            this.IndexDir = IndexDir;
-            Searcher = new IndexSearcher(new MMapDirectory(new DirectoryInfo(IndexDir), new SimpleFSLockFactory())); //,readOnly) 为boolean值
-            Sort = new Sort(); //(new SortField(FieldName, SortField.SCORE, true));   //fieldName can be null
-            Parser = new QueryParser(Version, FieldName, Analyzer);
+            try
+            {
+                if (System.IO.Directory.Exists(IndexDir) == false) throw new Exception(IndexDir + " Not Exist");
+                this.IndexDir = IndexDir;
+                Searcher = new IndexSearcher(new MMapDirectory(new DirectoryInfo(IndexDir), new SimpleFSLockFactory())); //,readOnly) 为boolean值
+                Sort = new Sort(); //(new SortField(FieldName, SortField.SCORE, true));   //fieldName can be null
+                Parser = new QueryParser(Version, FieldName, Analyzer);
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
         }
 
         public static void ReadDocs(string DocsDir, string IndexDir, bool isNewCreate = true)
         {
-            IndexWriter Writer = InitWriter(IndexDir, isNewCreate);
-
-            FileStream fs = new FileStream(DocsDir, FileMode.Open);
-
-            StreamReader Reader = new StreamReader(fs);
-            while (!Reader.EndOfStream)
+            try
             {
-                //Document doc = new Document();
-                //Field field = new Field("name", "content", Field.Store.YES, Field.Index.ANALYZED);
-                //doc.Add(field);
-                //writer.AddDocument(doc);
-                Document d = new Document();
-                d.Add(new Field(FieldName, Reader.ReadLine(), Field.Store.YES, Field.Index.ANALYZED));
-                Writer.AddDocument(d);
+                if (System.IO.File.Exists(DocsDir) == false) throw new Exception(DocsDir + " Not Exist");
+                IndexWriter Writer = InitWriter(IndexDir, isNewCreate);
+
+                FileStream fs = new FileStream(DocsDir, FileMode.Open);
+
+                StreamReader Reader = new StreamReader(fs);
+                while (!Reader.EndOfStream)
+                {
+                    //Document doc = new Document();
+                    //Field field = new Field("name", "content", Field.Store.YES, Field.Index.ANALYZED);
+                    //doc.Add(field);
+                    //writer.AddDocument(doc);
+                    Document d = new Document();
+                    d.Add(new Field(FieldName, Reader.ReadLine(), Field.Store.YES, Field.Index.ANALYZED));
+                    Writer.AddDocument(d);
+                }
+
+                Reader.Close();
+                fs.Close();
+
+                Writer.Optimize();
+                Writer.Commit();
+                Writer.Rollback();
+                Writer.Dispose();
             }
-
-            Reader.Close();
-            fs.Close();
-
-            Writer.Optimize();
-            Writer.Commit();
-            Writer.Rollback();
-            Writer.Dispose();
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         private static IndexWriter InitWriter(string IndexDir, bool isNewCreate = true)
