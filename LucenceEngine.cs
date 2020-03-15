@@ -32,7 +32,8 @@ namespace ProjectA
             {
                 if (System.IO.Directory.Exists(IndexDir) == false) throw new Exception(IndexDir + " Not Exist");
                 this.IndexDir = IndexDir;
-                Searcher = new IndexSearcher(new MMapDirectory(new DirectoryInfo(IndexDir), new SimpleFSLockFactory())); //,readOnly) 为boolean值
+                Searcher = new IndexSearcher(new SimpleFSDirectory(new DirectoryInfo(IndexDir), new SimpleFSLockFactory())); //,readOnly) 为boolean值
+                //Searcher = new IndexSearcher(new MMapDirectory(new DirectoryInfo(IndexDir), new SimpleFSLockFactory())); //,readOnly) 为boolean值
                 Sort = new Sort(); //(new SortField(FieldName, SortField.SCORE, true));   //fieldName can be null
                 Parser = new QueryParser(Version, FieldName, Analyzer);
             }
@@ -51,6 +52,8 @@ namespace ProjectA
 
                 FileStream fs = new FileStream(DocsDir, FileMode.Open);
 
+                //int count = 1;
+
                 StreamReader Reader = new StreamReader(fs);
                 while (!Reader.EndOfStream)
                 {
@@ -58,9 +61,13 @@ namespace ProjectA
                     //Field field = new Field("name", "content", Field.Store.YES, Field.Index.ANALYZED);
                     //doc.Add(field);
                     //writer.AddDocument(doc);
+
                     Document d = new Document();
                     d.Add(new Field(FieldName, Reader.ReadLine(), Field.Store.YES, Field.Index.ANALYZED));
                     Writer.AddDocument(d);
+
+                    //if (count == 200000) break;
+                    //count++;
                 }
 
                 Reader.Close();
@@ -88,6 +95,21 @@ namespace ProjectA
         {
             // MaxDoc = Searcher.MaxDoc;
             Query q = Parser.Parse(s);
+            TopFieldDocs hits = Searcher.Search(q, null, MaxDoc, Sort);
+            ScoreDoc[] scoreDocs = hits.ScoreDocs;
+            int docCount = scoreDocs.Length;
+            string[] result = new string[docCount];
+            for (int i = 0; i < docCount; i += 1) result[i] = Searcher.Doc(scoreDocs[i].Doc).Get(FieldName);
+
+            return result;
+        }
+
+        public string[] MultiSearch(string s1,string s2, int MaxDoc = 5)
+        {
+            // MaxDoc = Searcher.MaxDoc;
+            BooleanQuery q = new BooleanQuery();
+            q.Add(Parser.Parse(s1), Occur.MUST);
+            q.Add(Parser.Parse(s2), Occur.MUST);
             TopFieldDocs hits = Searcher.Search(q, null, MaxDoc, Sort);
             ScoreDoc[] scoreDocs = hits.ScoreDocs;
             int docCount = scoreDocs.Length;

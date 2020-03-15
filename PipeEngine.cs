@@ -20,18 +20,19 @@ namespace ProjectA
         public byte[] result;
         public int resultLength;
 
-        public PipeEngine(string PipeName,int IOBuffSize = 65535,int timeout = 1000)
+        public PipeEngine(string PipeName,string FileName = "python\\pipe.py",int IOBuffSize = 65535,int timeout = 5000)
         {
             this.timeout = timeout;
             this.PipeName = PipeName;
             this.IOBuffSize = IOBuffSize;
             Client = new NamedPipeClientStream(PipeName);
             result = new byte[IOBuffSize];
-            P = new Process();  
-            P.StartInfo.FileName = "python\\pipe.py";   //设置要启动的应用程序
-            P.StartInfo.Arguments = "\\\\.\\pipe\\" + PipeName; //设置启动参数， 详见pipe.py
+            P = new Process();
+            P.StartInfo.FileName = "python.exe";   //设置要启动的应用程序
+            P.StartInfo.Arguments = FileName+" \\\\.\\pipe\\" + PipeName; //设置启动参数， 详见pipe.py
             P.StartInfo.UseShellExecute = true;    //是否使用操作系统shell启动
             P.StartInfo.CreateNoWindow = true;  //不显示程序窗口
+            P.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Minimized;
         }
 
         public void StartEngine()
@@ -41,7 +42,7 @@ namespace ProjectA
                 //启动程序
                 P.Start();
                 //P = Process.Start("python\\pipe.py", "\\\\.\\pipe\\" + PipeName);
-                Client.Connect(timeout);
+                Client.Connect(timeout*10);
                 string s = "csharpPipe";
 
                 result.Initialize();

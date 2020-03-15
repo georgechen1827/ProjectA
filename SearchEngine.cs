@@ -38,7 +38,19 @@ namespace ProjectA
 
         public string[] Search(string query)
         {
-            return LucenceEngine.Search(query);
+            if (UsingPipeEngine)
+            {
+                try
+                {
+                    string syn = PipeEngine.Request(query);
+                    return LucenceEngine.MultiSearch(query,syn);
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+            }
+            else return LucenceEngine.Search(query);
         }
     }
 }

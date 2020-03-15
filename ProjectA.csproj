@@ -111,17 +111,36 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="python\nltk_data\corpora\wordnet\adj.exc" />
+    <None Include="python\nltk_data\corpora\wordnet\adv.exc" />
+    <None Include="python\nltk_data\corpora\wordnet\cntlist.rev" />
+    <None Include="python\nltk_data\corpora\wordnet\data.adj" />
+    <None Include="python\nltk_data\corpora\wordnet\data.adv" />
+    <None Include="python\nltk_data\corpora\wordnet\data.noun" />
+    <None Include="python\nltk_data\corpora\wordnet\data.verb" />
+    <None Include="python\nltk_data\corpora\wordnet\index.adj" />
+    <None Include="python\nltk_data\corpora\wordnet\index.adv" />
+    <None Include="python\nltk_data\corpora\wordnet\index.noun" />
+    <None Include="python\nltk_data\corpora\wordnet\index.sense" />
+    <None Include="python\nltk_data\corpora\wordnet\index.verb" />
+    <None Include="python\nltk_data\corpora\wordnet\lexnames" />
+    <None Include="python\nltk_data\corpora\wordnet\noun.exc" />
+    <None Include="python\nltk_data\corpora\wordnet\verb.exc" />
+    <None Include="python\nltk_data\taggers\averaged_perceptron_tagger\averaged_perceptron_tagger.pickle" />
+    <None Include="python\nltk_data\tokenizers\punkt\english.pickle" />
+    <None Include="python\nltk_data\tokenizers\punkt\PY3\english.pickle" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="python\pipe.py">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="resources\Docs.txt">
+    <Content Include="python\pakcheck.py">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="python\pipe.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\Docs.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

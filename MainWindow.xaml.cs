@@ -28,13 +28,10 @@ namespace ProjectA
             /** test */
 
 
-            
+            SearchEngine S = new SearchEngine();
 
-            LucenceEngine.ReadDocs("resources/Docs.txt", "resources/idx");   
 
-            LucenceEngine L = new LucenceEngine("resources/idx");
-
-            string[] s = L.Search("madam is");
+            string[] s = S.Search("the data are as follows");
 
             B.Text = "";
 
@@ -43,10 +40,6 @@ namespace ProjectA
                 B.Text += s[i] + "\n";
             }
 
-            PipeEngine p = new PipeEngine("testpipe");
-            p.StartEngine();
-
-            B.Text += p.Request("Request Request\n");
         }
 
     }
