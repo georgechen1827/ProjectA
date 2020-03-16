@@ -4,9 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProjectA"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="833.454" Width="800">
+        mc:Ignorable="d" Width="500" Height="600" MaxHeight="600" MinHeight="600" MinWidth="250" Title="MainWindow">
     <StackPanel>
-        <TextBlock x:Name="B" TextWrapping="Wrap" Text="TextBlock" Height="754" Margin="0,50,0.333,0"/>
+        <Label Content="Entering words here:" Margin="10,0,10.333,0" Height="24"/>
+        <TextBox Name="TextInput" Height="23" TextWrapping="Wrap" TextChanged="TextBox_TextChanged" Margin="10,0,10.333,0"/>
+        <Border BorderBrush="Black" BorderThickness="0" Height="10" Margin="10,0,10.333,0"/>
+        <CheckBox Name="UsingWordnet" Content="Using wordnet" Margin="10,0,0,0" Height="20" Checked="UsingWordNetChecked" HorizontalAlignment="Left" Width="125" Unchecked="UsingWordNetUnchecked" IsChecked="True"/>
+        <CheckBox Name="RealTimeSearch" Content="Real time search" Margin="10,0,0,0" Height="20" HorizontalAlignment="Left" Width="125" Checked="RealTimeSearchChecked" Unchecked="RealTimeSearchUnchecked" IsChecked="True"/>
+        <Button Content="Search" Margin="10,0,0,0" HorizontalAlignment="Left" Width="125" Click="Button_Click"/>
+        <Border BorderBrush="Black" BorderThickness="0" Height="10" Margin="10,0,10.333,0"/>
+        <TextBlock x:Name="TextShowing"  TextWrapping="Wrap"  Margin="10,0,10.333,10" OpacityMask="Black" Foreground="Black" Height="435" VerticalAlignment="Bottom" ScrollViewer.VerticalScrollBarVisibility="Disabled"><Run Background="Black"/></TextBlock>
     </StackPanel>
 </Window>

@@ -70,18 +70,19 @@ def synonyms(word,pos,leng = 5):
     else:
         pos = pos_dct[pos]
     res = word + ' '
-    count = 0
+#    count = 0
     for i in set([j for i in wordnet.synsets(word,pos) for j in i._lemma_names]):
         res += i + ' '
-        count += 1
-        if count == leng:
-            break
+#        count += 1
+#        if count == leng:
+#            break
     print(res)
     return res
 
 
 def func(string):
     try:
+        word = ' '
         tokens = nltk.word_tokenize(string)
         pos_tags = nltk.pos_tag(tokens)
         word,pos = pos_tags[-1]
@@ -93,13 +94,14 @@ def func(string):
 
 if __name__=="__main__":
     try:
+        gpus = sys.argv[1]
+        pipe = PipeEngine(gpus)
+        print("running")
+
         nltk.word_tokenize("hello world")
         wordnet.synsets("world")
         #initialize
 
-        gpus = sys.argv[1]
-        pipe = PipeEngine(gpus)
-        print("running")
         pipe.StartListening(func)
         input('运行结束，请关闭窗口')
 
